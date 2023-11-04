@@ -1,16 +1,12 @@
 import Table from "../../common/component/Table/Table.jsx"
-import {Button, TextField} from "@mui/material";
+import {Button} from "@mui/material";
 import {useEffect, useState} from "react";
 import instance from "../../services/AxiosOrders.jsx";
-// import Toast from "../../common/component/Alert/Alert.jsx";
 import Box from "@mui/material/Box";
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from '@mui/icons-material/Delete';
 import DrawIcon from '@mui/icons-material/Draw';
+import AddStudent from "../../component/addStudent/AddStudent.jsx";
 
 export default function ViewStudent() {
 
@@ -67,60 +63,7 @@ export default function ViewStudent() {
             <Table rows={data} columns={columns}/>
 
             <div>
-                <Dialog
-                    open={open}
-                    onClose={()=> setOpen(false)}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                >
-                    <DialogTitle id="alert-dialog-title">
-                        Add Student
-                    </DialogTitle>
-                    <DialogContent>
-                        <Box paddingBottom={2}>
-                            <TextField
-                                // onChange={(val)=> setName(val.target.value)}
-                                fullWidth
-                                id="outlined-basic"
-                                label="Student Name"
-                                variant="outlined"
-                            />
-                        </Box>
-                        <Box paddingBottom={2}>
-                            <TextField
-                                // onChange={(val)=> setEmail(val.target.value)}
-                                fullWidth
-                                id="outlined-basic"
-                                label="Student Age"
-                                variant="outlined"
-                            />
-                        </Box>
-                        <Box paddingBottom={2}>
-                            <TextField
-                                // onChange={(val)=> setPassword(val.target.value)}
-                                fullWidth
-                                id="outlined-basic"
-                                label="Student Address"
-                                variant="outlined"
-                            />
-                        </Box>
-                        <Box paddingBottom={2}>
-                            <TextField
-                                // onChange={(val)=> setComPassword(val.target.value)}
-                                fullWidth
-                                id="outlined-basic"
-                                label="Student Contact"
-                                variant="outlined"
-                            />
-                        </Box>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={()=> setOpen(false)}>Cansel</Button>
-                        <Button onClick={()=> setOpen(false)} color='info' variant='contained'>
-                            Save Student
-                        </Button>
-                    </DialogActions>
-                </Dialog>
+                <AddStudent open={open} setOpen={(val)=> setOpen(val)}/>
             </div>
         </div>
     )
