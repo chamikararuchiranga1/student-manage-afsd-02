@@ -14,6 +14,8 @@ export default function ViewStudent() {
 
     const [data, setData] = useState([]);
     const [open, setOpen] = useState(false);
+    const [updateOpen, setUpdateOpen] = useState(false);
+    const [updateData, setUpdateData] = useState();
 
     const columns = [
         { id: 'name', label: 'Name', minWidth: 170 },
@@ -56,6 +58,11 @@ export default function ViewStudent() {
         })
     }
 
+    const updateEvent = (val) => {
+        setUpdateOpen(true);
+        setUpdateData(val)
+    }
+
     const loadStudent = () => {
         instance.get('/student/getAll')
             .then(function (response) {
@@ -72,7 +79,7 @@ export default function ViewStudent() {
                                 <IconButton color='error' aria-label="delete" onClick={()=> deleteStudent(val.id)}>
                                     <DeleteIcon />
                                 </IconButton>
-                                <IconButton color='success' aria-label="delete">
+                                <IconButton color='success' aria-label="delete" onClick={()=> updateEvent(val)}>
                                     <DrawIcon />
                                 </IconButton>
                             </div>
@@ -95,6 +102,10 @@ export default function ViewStudent() {
 
             <div>
                 <AddStudent open={open} setOpen={(val)=> setOpen(val)} updateData={()=> loadStudent()}/>
+            </div>
+
+            <div>
+                <AddStudent data={updateData} update={true} open={updateOpen} setOpen={(val)=> setUpdateOpen(val)} updateData={()=> loadStudent()}/>
             </div>
         </div>
     )

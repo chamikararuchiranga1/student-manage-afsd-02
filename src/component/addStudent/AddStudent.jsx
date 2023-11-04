@@ -4,16 +4,25 @@ import Box from "@mui/material/Box";
 import {Button, TextField} from "@mui/material";
 import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Toast from "../../common/component/Alert/Alert.jsx";
 import instance from "../../services/AxiosOrders.jsx";
 
-export default function AddStudent({open, setOpen, updateData}) {
+export default function AddStudent({open, setOpen, updateData, update=false, data}) {
 
     const [name, setName] = useState('');
     const [age, setAge] = useState('');
     const [address, setAddress] = useState('');
     const [contact, setContact] = useState('');
+
+    useEffect(()=> {
+        if(update && data){
+            setName(data.student_name);
+            setAge(data.student_age);
+            setAddress(data.student_address);
+            setContact(data.student_contact);
+        }
+    },[data])
 
 
     const saveEvent = () => {
@@ -90,7 +99,7 @@ export default function AddStudent({open, setOpen, updateData}) {
             aria-describedby="alert-dialog-description"
         >
             <DialogTitle id="alert-dialog-title">
-                Add Student
+                {update ? "Update Student" : "Add Student"}
             </DialogTitle>
             <DialogContent>
                 <Box paddingBottom={2}>
@@ -137,7 +146,7 @@ export default function AddStudent({open, setOpen, updateData}) {
             <DialogActions>
                 <Button onClick={()=> setOpen(false)}>Cansel</Button>
                 <Button onClick={()=> saveEvent(false)} color='info' variant='contained'>
-                    Save Student
+                    {update ? "Update" : "Save Student"}
                 </Button>
             </DialogActions>
         </Dialog>
