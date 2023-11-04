@@ -6,8 +6,9 @@ import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
 import {useState} from "react";
 import Toast from "../../common/component/Alert/Alert.jsx";
+import instance from "../../services/AxiosOrders.jsx";
 
-export default function AddStudent({open, setOpen}) {
+export default function AddStudent({open, setOpen, updateData}) {
 
     const [name, setName] = useState('');
     const [age, setAge] = useState('');
@@ -58,6 +59,27 @@ export default function AddStudent({open, setOpen}) {
         }
 
         console.log(name, age, address, contact);
+        const data = {
+            student_name: name,
+            student_age: age,
+            student_address: address,
+            student_contact: contact
+        }
+        instance.post('/student/save', data)
+            .then(function (response) {
+                updateData();
+                setOpen(false);
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Save Student Success..!'
+                })
+            })
+            .catch(function (error) {
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Saved error..!'
+                })
+            })
     }
 
     return (

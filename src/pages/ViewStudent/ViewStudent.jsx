@@ -63,7 +63,7 @@ export default function ViewStudent() {
             <Table rows={data} columns={columns}/>
 
             <div>
-                <AddStudent open={open} setOpen={(val)=> setOpen(val)}/>
+                <AddStudent open={open} setOpen={(val)=> setOpen(val)} updateData={()=> loadStudent()}/>
             </div>
         </div>
     )
