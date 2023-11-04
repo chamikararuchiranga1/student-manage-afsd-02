@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2';
+import './style.css'
 
 const Toast = Swal.mixin({
     toast: true,
@@ -6,6 +7,7 @@ const Toast = Swal.mixin({
     showConfirmButton: false,
     timer: 3000,
     timerProgressBar: true,
+    customClass: {container: 'my-swal'},
     didOpen: (toast) => {
         toast.addEventListener('mouseenter', Swal.stopTimer)
         toast.addEventListener('mouseleave', Swal.resumeTimer)
