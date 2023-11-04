@@ -14,9 +14,11 @@ export default function AddStudent({open, setOpen, updateData, update=false, dat
     const [age, setAge] = useState('');
     const [address, setAddress] = useState('');
     const [contact, setContact] = useState('');
+    const [id, setId] = useState('');
 
     useEffect(()=> {
         if(update && data){
+            setId(data.id)
             setName(data.student_name);
             setAge(data.student_age);
             setAddress(data.student_address);
@@ -74,21 +76,40 @@ export default function AddStudent({open, setOpen, updateData, update=false, dat
             student_contact: contact
         }
 
-        instance.post('/student/save', data)
-            .then(function (response) {
-                updateData();
-                setOpen(false);
-                Toast.fire({
-                    icon: 'success',
-                    title: 'Save Student Success..!'
+        if(update){
+            instance.put('/student/update/'+id, data)
+                .then(function (response) {
+                    updateData();
+                    setOpen(false);
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Update Student Success..!'
+                    })
                 })
-            })
-            .catch(function (error) {
-                Toast.fire({
-                    icon: 'error',
-                    title: 'Saved error..!'
+                .catch(function (error) {
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Update error..!'
+                    })
                 })
-            })
+        }else {
+            instance.post('/student/save', data)
+                .then(function (response) {
+                    updateData();
+                    setOpen(false);
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Save Student Success..!'
+                    })
+                })
+                .catch(function (error) {
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Saved error..!'
+                    })
+                })
+        }
+
     }
 
     return (
