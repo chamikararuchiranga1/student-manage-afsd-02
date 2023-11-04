@@ -7,6 +7,8 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from '@mui/icons-material/Delete';
 import DrawIcon from '@mui/icons-material/Draw';
 import AddStudent from "../../component/addStudent/AddStudent.jsx";
+import Toast from "../../common/component/Alert/Alert.jsx";
+import Swal from "sweetalert2";
 
 export default function ViewStudent() {
 
@@ -25,6 +27,35 @@ export default function ViewStudent() {
         loadStudent();
     },[]);
 
+    const deleteStudent = (id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "you want delete student..!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                instance.delete('/student/delete/'+id)
+                    .then(function (response) {
+                        loadStudent();
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Delete Student Success..!'
+                        })
+                    })
+                    .catch(function (error) {
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Delete error..!'
+                        })
+                    })
+            }
+        })
+    }
+
     const loadStudent = () => {
         instance.get('/student/getAll')
             .then(function (response) {
@@ -38,7 +69,7 @@ export default function ViewStudent() {
                         address: val.student_address,
                         action: (
                             <div>
-                                <IconButton color='error' aria-label="delete">
+                                <IconButton color='error' aria-label="delete" onClick={()=> deleteStudent(val.id)}>
                                     <DeleteIcon />
                                 </IconButton>
                                 <IconButton color='success' aria-label="delete">

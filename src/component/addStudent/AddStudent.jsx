@@ -58,13 +58,13 @@ export default function AddStudent({open, setOpen, updateData}) {
             return
         }
 
-        console.log(name, age, address, contact);
         const data = {
             student_name: name,
             student_age: age,
             student_address: address,
             student_contact: contact
         }
+
         instance.post('/student/save', data)
             .then(function (response) {
                 updateData();
